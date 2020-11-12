@@ -12,7 +12,6 @@ import org.springframework.data.relational.core.mapping.Table;
 @NoArgsConstructor
 @Table("users")
 public class User {
-    @Id
     private Integer user_id;
     private String user_firstname;
     private String user_lastname;

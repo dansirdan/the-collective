@@ -12,7 +12,6 @@ import org.springframework.data.relational.core.mapping.Table;
 @NoArgsConstructor
 @Table("events")
 public class Event {
-    @Id
     private Integer event_id;
     private String event_category;
     private String event_type;
@@ -24,6 +23,5 @@ public class Event {
     private String event_date;
     private boolean event_recurring;
     private String event_enddate;
-    @Column("user_id")
     private Integer event_userID;
 }

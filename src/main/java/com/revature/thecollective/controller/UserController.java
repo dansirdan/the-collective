@@ -29,40 +29,40 @@ private UserService userService;
         return userService.getAllUsers();
     }
 
-    @GetMapping("/{userId}")
-    public Mono<ResponseEntity<User>> getUserById(@PathVariable Integer userId){
-        Mono<User> user = userService.findById(userId);
+    @GetMapping("/{user_id}")
+    public Mono<ResponseEntity<User>> getUserById(@PathVariable Integer user_id){
+        Mono<User> user = userService.findById(user_id);
         return user.map( u -> ResponseEntity.ok(u))
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/{userId}")
-    public Mono<ResponseEntity<User>> updateUserById(@PathVariable Integer userId, @RequestBody User user){
-        return userService.updateUser(userId,user)
+    @PutMapping("/{user_id}")
+    public Mono<ResponseEntity<User>> updateUserById(@PathVariable Integer user_id, @RequestBody User user){
+        return userService.updateUser(user_id,user)
                 .map(updatedUser -> ResponseEntity.ok(updatedUser))
                 .defaultIfEmpty(ResponseEntity.badRequest().build());
     }
 
-    @DeleteMapping("/{userId}")
-    public Mono<ResponseEntity<Void>> deleteUserById(@PathVariable Integer userId){
-        return userService.deleteUser(userId)
+    @DeleteMapping("/{user_id}")
+    public Mono<ResponseEntity<Void>> deleteUserById(@PathVariable Integer user_id){
+        return userService.deleteUser(user_id)
                 .map( r -> ResponseEntity.ok().<Void>build())
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/location/{location}")
-    public Flux<User> getUsersByLocation(@PathVariable String location) {
-        return userService.findUsersByLocation(location);
+    @GetMapping("/location/{user_location}")
+    public Flux<User> getUsersByLocation(@PathVariable String user_location) {
+        return userService.findUsersByLocation(user_location);
     }
 
     @PostMapping("/search/id")
-    public Flux<User> fetchUsersByIds(@RequestBody List<Integer> ids) {
-        return userService.fetchUsers(ids);
+    public Flux<User> fetchUsersByIds(@RequestBody List<Integer> user_ids) {
+        return userService.fetchUsers(user_ids);
     }
 
-    @GetMapping("/{userId}/event")
-    public Mono<UserEventDTO> fetchUserAndEvent(@PathVariable Integer userId){
-        return userService.fetchUserAndEvent(userId);
+    @GetMapping("/{user_id}/event")
+    public Mono<UserEventDTO> fetchUserAndEvent(@PathVariable Integer user_id){
+        return userService.fetchUserAndEvent(user_id);
     }
 
 }

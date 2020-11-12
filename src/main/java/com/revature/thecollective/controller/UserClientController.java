@@ -16,9 +16,9 @@ public class UserClientController {
     @Autowired
     private UserClient userClient;
 
-    @GetMapping("/{userId}")
-    public Mono<ResponseEntity<User>> getUserById(@PathVariable String userId){
-        Mono<User> user = userClient.getUser(userId);
+    @GetMapping("/{user_id}")
+    public Mono<ResponseEntity<User>> getUserById(@PathVariable String user_id){
+        Mono<User> user = userClient.getUser(user_id);
         return user.map( u -> ResponseEntity.ok(u))
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }

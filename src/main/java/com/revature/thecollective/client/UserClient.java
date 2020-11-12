@@ -12,9 +12,9 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class UserClient {
     private WebClient client = WebClient.create("http://localhost:8080");
-    public Mono<User> getUser(String userId){
+    public Mono<User> getUser(String user_id){
        return client.get()
-                .uri("/users/{userId}", userId)
+                .uri("/users/{user_id}", user_id)
                 .retrieve()
                 .bodyToMono(User.class).log(" User fetched ");
     }

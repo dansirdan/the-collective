@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 public class UserEventDTO {
-    private Integer userId;
-    private String userName;
-    private Integer eventId;
-    private String userLocation;
+    private Integer user_id;
+    private String user_firstname;
+    private Integer event_id;
+    private String user_location;
 }

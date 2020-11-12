@@ -7,5 +7,5 @@ import reactor.core.publisher.Flux;
 
 public interface UserRepository extends ReactiveCrudRepository<User,Integer> {
     @Query("select * from users where user_location = $1")
-    Flux<User> findByLocation(String location);
+    Flux<User> findByLocation(String user_location);
 }

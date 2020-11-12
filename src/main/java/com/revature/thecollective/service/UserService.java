@@ -35,12 +35,12 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Mono<User> findById(Integer userId){
-        return userRepository.findById(userId);
+    public Mono<User> findById(Integer user_id){
+        return userRepository.findById(user_id);
     }
 
-    public Mono<User> updateUser(Integer userId,  User user){
-        return userRepository.findById(userId)
+    public Mono<User> updateUser(Integer user_id,  User user){
+        return userRepository.findById(user_id)
                 .flatMap(dbUser -> {
                     dbUser.setUser_location(user.getUser_location());
                     // dbUser.setSalary(user.getSalary());
@@ -48,8 +48,8 @@ public class UserService {
                 });
     }
 
-    public Mono<User> deleteUser(Integer userId){
-        return userRepository.findById(userId)
+    public Mono<User> deleteUser(Integer user_id){
+        return userRepository.findById(user_id)
                 .flatMap(existingUser -> userRepository.delete(existingUser)
                 .then(Mono.just(existingUser)));
     }
@@ -58,27 +58,27 @@ public class UserService {
         return userRepository.findByLocation(location);
     }
 
-    public Flux<User> fetchUsers(List<Integer> userIds) {
-        return Flux.fromIterable(userIds)
+    public Flux<User> fetchUsers(List<Integer> user_ids) {
+        return Flux.fromIterable(user_ids)
                 .parallel()
                 .runOn(Schedulers.elastic())
                 .flatMap(i -> findById(i))
                 .ordered((u1, u2) -> u2.getUser_id() - u1.getUser_id());
     }
 
-    private Mono<Event> getEventByUserId(Integer userId){
-        return eventRepository.findByUserId(userId);
+    private Mono<Event> getEventByUserId(Integer event_userID){
+        return eventRepository.findByUserId(event_userID);
     }
 
-    public Mono<UserEventDTO> fetchUserAndEvent(Integer userId){
-        Mono<User> user = findById(userId).subscribeOn(Schedulers.elastic());
-        Mono<Event> event = getEventByUserId(userId).subscribeOn(Schedulers.elastic());
+    public Mono<UserEventDTO> fetchUserAndEvent(Integer user_id){
+        Mono<User> user = findById(user_id).subscribeOn(Schedulers.elastic());
+        Mono<Event> event = getEventByUserId(user_id).subscribeOn(Schedulers.elastic());
         return Mono.zip(user, event, userEventDTOBiFunction);
     }
 
     private BiFunction<User, Event, UserEventDTO> userEventDTOBiFunction = (x1, x2) -> UserEventDTO.builder()
-            .userLocation(x1.getUser_location())
-            .eventId(x2.getEvent_id())
-            .userName(x1.getUser_firstname())
-            .userId(x1.getUser_id()).build();
+            .user_location(x1.getUser_location())
+            .event_id(x2.getEvent_id())
+            .user_firstname(x1.getUser_firstname())
+            .user_id(x1.getUser_id()).build();
 }
